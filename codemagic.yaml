@@ -1,3 +1,18 @@
-git add codemagic.yaml
-git commit -m 'Add first workflow'
-git push
+workflows:
+  android-build:
+    name: Build Exo Stream Player
+    max_build_duration: 60
+    instance_type: mac_mini
+    environment:
+      vars:
+        BUILD_DIR: "app/build/outputs/apk/release"
+      java: 17
+    scripts:
+      - name: Set Gradle permissions
+        script: chmod +x ./gradlew
+      - name: Download Android SDK components
+        script: yes | sdkmanager --licenses
+      - name: Build Release APK
+        script: ./gradlew assembleRelease
+    artifacts:
+      - $BUILD_DIR/*.apk
