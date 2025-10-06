@@ -2,7 +2,7 @@ workflows:
   android-build:
     name: Build Exo Stream Player
     max_build_duration: 60
-    instance_type: mac_mini
+    instance_type: linux_x2
     environment:
       vars:
         BUILD_DIR: "app/build/outputs/apk/release"
@@ -10,7 +10,7 @@ workflows:
     scripts:
       - name: Set Gradle permissions
         script: chmod +x ./gradlew
-      - name: Download Android SDK components
+      - name: Accept Android SDK licenses
         script: yes | sdkmanager --licenses
       - name: Build Release APK
         script: ./gradlew assembleRelease
